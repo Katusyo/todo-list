@@ -13,3 +13,8 @@ body {
     padding: 0.5rem;
     margin-top: 0.5rem;
 }
+
+.completed {
+    text-decoration: line-through;
+    opacity: 0.5;
+}

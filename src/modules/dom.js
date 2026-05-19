@@ -12,19 +12,36 @@ function renderProjects(projects) {
 
         projectDiv.appendChild(projectTitle);
 
-        renderTodos(project, projectDiv);
+        renderTodos(project, projectDiv, projects);
 
         content.appendChild(projectDiv);
     });
 }
 
-function renderTodos(project, container) {
-    project.todos.forEach((todo) => {
+function renderTodos(project, container, projects) {
+    project.todos.forEach((todo, todoIndex) => {
         const todoDiv = document.createElement('div');
         todoDiv.classList.add('todo-card');
 
         const title = document.createElement('h3');
         title.textContent = todo.title;
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.addEventListener('click', () => {
+            project.todos.splice(todoIndex, 1);
+
+            renderProjects(projects);
+        });
+
+        const completeBtn = document.createElement('button');
+        completeBtn.textContent = 'Complete';
+        completeBtn.addEventListener('click', () => {
+            todo.completed = !todo.completed;
+
+            renderProjects(projects);
+        });
+
 
         const description = document.createElement('p');
         description.textContent = todo.description;
@@ -40,10 +57,24 @@ function renderTodos(project, container) {
             ? 'Completed'
             : 'Not Complete';
         
-        todoDiv.append(title, description, dueDate, priority, status);
+        todoDiv.append(title, completeBtn, deleteBtn, description, dueDate, priority, status);
 
         container.appendChild(todoDiv);
     });
+}
+
+function createDeleteButton(project, todoIndex, projects) {
+    const btn = document.createElement('button');
+
+    btn.textContent = 'Delete';
+
+    btn.addEventListener('click', () => {
+        project.todos.splice(todoIndex, 1);
+
+        renderProjects(projects);
+    });
+
+    return btn;
 }
 
 export default renderProjects;
