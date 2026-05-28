@@ -1,21 +1,72 @@
+import Project from './project';
+import Todo from './todo';
+
 const content = document.getElementById('content');
+const modal = document.getElementById('project-modal');
+const projectForm = document.getElementById('project-form');
+projectForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const projectName = document.getElementById('project-name').value;
 
-function renderProjects(projects) {
+    const todoTitle = document.getElementById('todo-title').value;
+
+    const todoDescription = document.getElementById('todo-description').value;
+
+    const todoDate = document.getElementById('todo-date').value;
+
+    const todoPriority = document.getElementById('todo-priority').value;
+
+    const newProject = new Project(projectName);
+
+    const newTodo = new Todo(
+        todoTitle,
+        todoDescription,
+        todoDate,
+        todoPriority
+    );
+
+    newProject.addTodo(newTodo);
+
+    currentProjects.push(newProject);
+})
+
+let currentProjects = [];
+
+function renderProjects(projects, activeProject) {
+    if (!activeProject) return;
+    
     content.innerHTML = '';
+    currentProjects = projects;
 
-    projects.forEach((project) => {
-        const projectDiv = document.createElement('div');
-        projectDiv.classList.add('project');
+    renderProjectList(projects, activeProject);
 
-        const projectTitle = document.createElement('h2');
-        projectTitle.textContent = project.name;
+    const projectDiv = document.createElement('div');
+    projectDiv.classList.add('project');
 
-        projectDiv.appendChild(projectTitle);
+    const title = document.createElement('h2');
+    title.textContent = activeProject.name;
 
-        renderTodos(project, projectDiv, projects);
+    const deleteProjectBtn = document.createElement('button');
+    deleteProjectBtn.textContent = 'Delete Project';
+    deleteProjectBtn.addEventListener('click', () => {
+        const projectIndex = projects.indexOf(activeProject);
 
-        content.appendChild(projectDiv);
+        projects.splice(projectIndex, 1);
+
+        if (projects.length === 0) {
+            content.innerHTML = '';
+            sidebar.innerHTML = '';
+            return;
+        }
+
+        renderProjects(projects, projects[0]);
     });
+
+    projectDiv.append(title, deleteProjectBtn);
+
+    renderTodos(activeProject, projectDiv, projects);
+
+    content.appendChild(projectDiv);
 }
 
 function renderTodos(project, container, projects) {
@@ -31,7 +82,7 @@ function renderTodos(project, container, projects) {
         deleteBtn.addEventListener('click', () => {
             project.todos.splice(todoIndex, 1);
 
-            renderProjects(projects);
+            renderProjects(currentProjects, project);
         });
 
         const completeBtn = document.createElement('button');
@@ -39,7 +90,7 @@ function renderTodos(project, container, projects) {
         completeBtn.addEventListener('click', () => {
             todo.completed = !todo.completed;
 
-            renderProjects(projects);
+            renderProjects(projects, project);
         });
 
 
@@ -71,10 +122,80 @@ function createDeleteButton(project, todoIndex, projects) {
     btn.addEventListener('click', () => {
         project.todos.splice(todoIndex, 1);
 
-        renderProjects(projects);
+        renderProjects(projects, project);
     });
 
     return btn;
 }
 
+const sidebar = document.getElementById('sidebar');
+
+function renderProjectList(projects, activeProject) {
+    sidebar.innerHTML = '';
+
+    projects.forEach((project) => {
+        const projectBtn = document.createElement('button');
+
+        projectBtn.textContent = project.name;
+
+        projectBtn.addEventListener('click', () => {
+            renderProjects(projects, project);
+        });
+
+        sidebar.appendChild(projectBtn);
+    });
+
+        const addProjectBtn = document.createElement('button');
+
+        addProjectBtn.textContent = 'Add Project';
+
+        addProjectBtn.addEventListener('click', () => {
+            modal.classList.remove('hidden');
+            projectForm.reset();
+        });
+
+    projectForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const projectName = document.getElementById('project-name').value;
+
+        const todoTitle = document.getElementById('todo-title').value;
+
+        const todoDescription = document.getElementById('todo-description').value;
+
+        const todoDate = document.getElementById('todo-date').value;
+
+        const todoPriority = document.getElementById('todo-priority').value;
+
+        const newProject = new Project(projectName);
+
+        const newTodo = new Todo(
+            todoTitle,
+            todoDescription,
+            todoDate,
+            todoPriority
+        );
+
+        newProject.addTodo(newTodo);
+
+        currentProjects.push(newProject);
+
+        renderProjects(currentProjects, newProject);
+
+        modal.classList.add('hidden');
+
+        projectForm.reset();
+    });
+
+            sidebar.appendChild(addProjectBtn);
+    }
 export default renderProjects;
+
+function createStarterTodo() {
+    return new Todo(
+        'New Todo',
+        'Add a descrition',
+        'No due date',
+        'Low'
+    );
+}

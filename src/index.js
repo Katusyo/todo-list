@@ -17,4 +17,6 @@ defaultProject.addTodo(
 
 const projects = [defaultProject];
 
-renderProjects(projects);
+let activeProject = projects[0];
+
+renderProjects(projects, activeProject);
