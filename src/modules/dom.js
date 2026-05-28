@@ -1,44 +1,71 @@
 import Project from './project';
 import Todo from './todo';
 
+let currentActiveProject = null;
+
+const taskModal = document.getElementById('task-modal');
+const taskForm = document.getElementById('task-form');
 const content = document.getElementById('content');
 const modal = document.getElementById('project-modal');
 const projectForm = document.getElementById('project-form');
+
 projectForm.addEventListener('submit', (e) => {
     e.preventDefault();
+
     const projectName = document.getElementById('project-name').value;
-
-    const todoTitle = document.getElementById('todo-title').value;
-
-    const todoDescription = document.getElementById('todo-description').value;
-
-    const todoDate = document.getElementById('todo-date').value;
-
-    const todoPriority = document.getElementById('todo-priority').value;
 
     const newProject = new Project(projectName);
 
+    currentProjects.push(newProject);
+
+    renderProjects(currentProjects, newProject);
+
+    modal.classList.add('hidden');
+
+    projectForm.reset();
+});
+
+taskForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const todoTitle = document.getElementById('todo-title').value;
+    const todoDescription = document.getElementById('todo-description').value;
+    const todoDate = document.getElementById('todo-date').value;
+    const todoPriority = document.getElementById('todo-priority').value;
+    
     const newTodo = new Todo(
         todoTitle,
         todoDescription,
         todoDate,
         todoPriority
-    );
+);
 
-    newProject.addTodo(newTodo);
+    currentActiveProject.addTodo(newTodo);
 
-    currentProjects.push(newProject);
-})
+    renderProjects(currentProjects, currentActiveProject);
+
+    taskModal.classList.add('hidden');
+
+    taskForm.reset();
+});
 
 let currentProjects = [];
 
 function renderProjects(projects, activeProject) {
     if (!activeProject) return;
-    
+
     content.innerHTML = '';
-    currentProjects = projects;
+    currentActiveProject = activeProject;
 
     renderProjectList(projects, activeProject);
+
+    const addTaskBtn = document.createElement('button');
+
+    addTaskBtn.textContent = 'Add Task';
+
+    addTaskBtn.addEventListener('click', () => {
+    taskModal.classList.remove('hidden');
+});
 
     const projectDiv = document.createElement('div');
     projectDiv.classList.add('project');
@@ -55,14 +82,17 @@ function renderProjects(projects, activeProject) {
 
         if (projects.length === 0) {
             content.innerHTML = '';
-            sidebar.innerHTML = '';
+            renderProjectList(projects, null);
+
+            content.innerHTML = '';
+
             return;
         }
 
         renderProjects(projects, projects[0]);
     });
 
-    projectDiv.append(title, deleteProjectBtn);
+    projectDiv.append(title, deleteProjectBtn, addTaskBtn);
 
     renderTodos(activeProject, projectDiv, projects);
 
@@ -153,39 +183,6 @@ function renderProjectList(projects, activeProject) {
             modal.classList.remove('hidden');
             projectForm.reset();
         });
-
-    projectForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-
-        const projectName = document.getElementById('project-name').value;
-
-        const todoTitle = document.getElementById('todo-title').value;
-
-        const todoDescription = document.getElementById('todo-description').value;
-
-        const todoDate = document.getElementById('todo-date').value;
-
-        const todoPriority = document.getElementById('todo-priority').value;
-
-        const newProject = new Project(projectName);
-
-        const newTodo = new Todo(
-            todoTitle,
-            todoDescription,
-            todoDate,
-            todoPriority
-        );
-
-        newProject.addTodo(newTodo);
-
-        currentProjects.push(newProject);
-
-        renderProjects(currentProjects, newProject);
-
-        modal.classList.add('hidden');
-
-        projectForm.reset();
-    });
 
             sidebar.appendChild(addProjectBtn);
     }
