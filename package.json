@@ -16,5 +16,8 @@
     "webpack-cil": "^0.0.1-security",
     "webpack-cli": "^7.0.2",
     "webpack-dev-server": "^5.2.4"
+  },
+  "dependencies": {
+    "date-fns": "^4.4.0"
   }
 }
