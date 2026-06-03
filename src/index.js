@@ -14,8 +14,8 @@ if (projects.length === 0) {
         new Todo(
             'add project name',
             'Create a new project by entering a name and clicking the "Add Project" button.',
-            'N/A',
-            'N/A'
+            '',
+            'Low'
         )
     );
 

@@ -1,6 +1,7 @@
 import Project from './project';
 import Todo from './todo';
 import { saveProjects } from './storage';
+import { format } from 'date-fns';
 
 let currentActiveProject = null;
 
@@ -123,10 +124,12 @@ function renderProjects(projects, activeProject) {
         saveProjects(projects);
 
         if (projects.length === 0) {
+            currentActiveProject = null;
+
+            saveProjects(projects);
+            
             content.innerHTML = '';
             renderProjectList(projects, null);
-
-            content.innerHTML = '';
 
             return;
         }
@@ -142,9 +145,17 @@ function renderProjects(projects, activeProject) {
 }
 
 function renderTodos(project, container, projects) {
+    if (!project.todos) {
+        console.error('Project has no todos array');
+        return;
+    }
     project.todos.forEach((todo, todoIndex) => {
         const todoDiv = document.createElement('div');
         todoDiv.classList.add('todo-card');
+
+        if (todo.completed) {
+            todoDiv.classList.add('completed');
+        }
 
         const title = document.createElement('h3');
         title.textContent = todo.title;
@@ -190,10 +201,24 @@ function renderTodos(project, container, projects) {
         description.textContent = todo.description;
 
         const dueDate = document.createElement('p');
-        dueDate.textContent = `Due: ${todo.dueDate}`;
+
+        let formattedDate = 'No Due Date';
+
+        if (
+            todo.dueDate && !isNaN(new Date(todo.dueDate))
+        ) {
+            formattedDate = format(
+                new Date(todo.dueDate),
+                'MMM-dd-yyyy'
+            );
+        }
+
+        dueDate.textContent = `Due: ${formattedDate}`;
 
         const priority = document.createElement('p');
         priority.textContent = `Priority: ${todo.priority}`;
+
+        todoDiv.classList.add(todo.priority.toLowerCase());
         
         const status =document.createElement('p');
         status.textContent = todo.completed
