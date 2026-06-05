@@ -137,9 +137,24 @@ function renderProjects(projects, activeProject) {
         renderProjects(projects, projects[0]);
     });
 
-    projectDiv.append(title, deleteProjectBtn, addTaskBtn);
+    const headerDiv = document.createElement('div');
+    headerDiv.classList.add('project-header');
 
-    renderTodos(activeProject, projectDiv, projects);
+    const actionsDiv = document.createElement('div');
+    actionsDiv.classList.add('project-actions');
+
+    actionsDiv.append(deleteProjectBtn, addTaskBtn);
+
+    headerDiv.append(title, actionsDiv);
+
+    projectDiv.appendChild(headerDiv);
+
+    const todoGrid = document.createElement('div');
+    todoGrid.classList.add('todo-grid');
+
+    projectDiv.appendChild(todoGrid);
+
+    renderTodos(activeProject, todoGrid, projects);
 
     content.appendChild(projectDiv);
 }
@@ -218,14 +233,25 @@ function renderTodos(project, container, projects) {
         const priority = document.createElement('p');
         priority.textContent = `Priority: ${todo.priority}`;
 
+        priority.classList.add(`priority-${todo.priority.toLowerCase()}`);
+
         todoDiv.classList.add(todo.priority.toLowerCase());
         
-        const status =document.createElement('p');
+        const status = document.createElement('p');
         status.textContent = todo.completed
             ? 'Completed'
             : 'Not Complete';
-        
-        todoDiv.append(title, completeBtn, editBtn, deleteBtn, description, dueDate, priority, status);
+
+        const cardActions = document.createElement('div');
+        cardActions.classList.add('todo-actions');
+
+        cardActions.append(
+            completeBtn, editBtn, deleteBtn
+        );
+
+        todoDiv.append(
+            title, description, dueDate, priority, status, cardActions
+        );            
 
         container.appendChild(todoDiv);
     });
@@ -255,6 +281,7 @@ function renderProjectList(projects, activeProject) {
     projects.forEach((project) => {
         const projectBtn = document.createElement('button');
 
+        projectBtn.classList.add('project-btn');
         projectBtn.textContent = project.name;
 
         projectBtn.addEventListener('click', () => {
@@ -265,6 +292,7 @@ function renderProjectList(projects, activeProject) {
     });
 
         const addProjectBtn = document.createElement('button');
+        addProjectBtn.classList.add('add-project-btn');
 
         addProjectBtn.textContent = 'Add Project';
 
