@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VP Todo List</title>
+<script defer src="main.js"></script></head>
+<body>
+    <div id="container">
+        <div id="sidebar"></div>
+
+        <div id="content"></div>
+    </div>
+
+    <div id="overlay" class="hidden"></div>
+
+    <div id="project-modal" class="hidden">
+        <form id="project-form">
+
+            <input
+                type="text"
+                id="project-name"
+                placeholder="Project-Name"
+                required
+            >
+
+            <button type="submit">Create Project</button>
+
+        </form>
+    </div>
+    <div id="task-modal" class="hidden">
+        <form id="task-form">
+
+            <input
+                type="text"
+                id="todo-title"
+                placeholder="Todo Title"
+                required
+            >
+
+            <textarea
+                id="todo-description"
+                placeholder="Description"
+                ></textarea>
+
+            <input
+                type="date"
+                id="todo-date"
+            >
+
+            <select id="todo-priority">
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select>
+
+            <button type="submit">Add Task</button>
+        </form>
+    </div>
+</body>
+</html>
