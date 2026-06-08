@@ -163,7 +163,7 @@ button {
 .project-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: 1rem;
     flex-wrap: wrap;
     gap: 1rem;
@@ -173,6 +173,9 @@ button {
     flex: 1;
     min-width: 200px;
     margin:0;
+
+    overflow: break-word;
+    word-break: break-word;
 }
 
 .project-btn {
@@ -184,6 +187,9 @@ button {
     text-align: left;
     cursor: pointer;
     transition: all 0.4s ease;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .project-btn:hover {

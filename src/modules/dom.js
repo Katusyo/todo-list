@@ -492,6 +492,8 @@ function renderProjectList(projects, activeProject) {
         projectBtn.classList.add('project-btn');
         projectBtn.textContent = `${project.name} (${project.todos.length})`;
 
+        projectBtn.title = `${project.name} (${project.todos.length})`;
+
         projectBtn.addEventListener('click', () => {
             currentView = 'project';
             renderProjects(projects, project);
