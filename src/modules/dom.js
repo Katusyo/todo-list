@@ -18,6 +18,14 @@ const taskForm = document.getElementById('task-form');
 const content = document.getElementById('content');
 const modal = document.getElementById('project-modal');
 const projectForm = document.getElementById('project-form');
+const menuBtn = document.getElementById('menu-btn');
+const sidebar = document.getElementById('sidebar');
+
+if (menuBtn) {
+    menuBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('open');
+    });
+}
 
 projectForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -432,8 +440,6 @@ function renderTodos(project, container, projects) {
     });
 }
 
-const sidebar = document.getElementById('sidebar');
-
 function renderProjectList(projects, activeProject) {
     sidebar.innerHTML = '';
 
@@ -497,6 +503,10 @@ function renderProjectList(projects, activeProject) {
         projectBtn.addEventListener('click', () => {
             currentView = 'project';
             renderProjects(projects, project);
+
+            if (window.innerWidth <= 768) {
+                sidebar.classList.remove('open');
+            }
         });
 
         sidebar.appendChild(projectBtn);
