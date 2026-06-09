@@ -162,10 +162,14 @@ button {
     padding: 1rem;
     border-right: 2px solid black;
     background-color: #0ecaca;
+    overflow-y: auto;
 }
 
 #menu-btn{
     display: none;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
 }
 
 @media (max-width: 768px) {
@@ -190,6 +194,7 @@ button {
 
         transition: left 0.3s ease;
         z-index: 1000;
+        overflow-y:auto
     }
 
     #sidebar.open {
@@ -220,6 +225,17 @@ button {
 
     .todo-card {
         max-width: 100%;
+        max-width: none;
+    }
+
+    #content {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    #content {
+        padding-top: 4rem;
     }
 }
 
@@ -280,7 +296,9 @@ button {
 }
 
 .add-project-btn {
-    margin-top: auto;
+    margin-top: 1rem;
+    bottom: 1rem;
+    position: sticky;
 }
 
 .project-actions {
@@ -317,4 +335,22 @@ button {
 
 .sidebar-header h2 {
     margin: 0.5rem 0;
+}
+
+#mobile-header {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    #mobile-header {
+        display: flex;
+        align-items: center;
+        height: 60px;
+        padding: 0 1rem;
+        border-bottom: 1px solid #ccc;
+    }
+
+    #content {
+        padding-top: 1rem;
+    }
 }
