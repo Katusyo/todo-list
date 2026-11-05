@@ -9,8 +9,8 @@ A project-based todo app built with vanilla JavaScript.Tasks live inside project
 
 ## Built with
 - JavaScript (ES modules and classes)
-- webpack 5 (with Babel, HtmlWebpackPlugin an webpack-dev-server)
-- date-fns for date handling and foratting
+- webpack 5 (with Babel, HtmlWebpackPlugin a webpack-dev-server)
+- date-fns for date handling and formatting
 - HTML and CSS (modal dialogs, responsive sidebar layout)
 
 ## Features
