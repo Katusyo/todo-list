@@ -19,5 +19,5 @@ A project-based todo app built with vanilla JavaScript.Tasks live inside project
 - Each task has a title, description,due date and priority (Low / Medium / High)
 - Sort tasks by due date, priority or title
 
-About
-Built as part of The Odin Project's JavaScript course (Todo List project).
+**About**
+## Built as part of The Odin Project's JavaScript course (Todo List project).
