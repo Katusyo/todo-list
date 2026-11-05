@@ -3,7 +3,8 @@
 A project-based todo app built with vanilla JavaScript.Tasks live inside projects, are saved in the browser automatically, and can be viewed by project, by what's due today, or by what's overdue.
 
 **Live demo:**<https://katusyo.github.io/todo-list/>
-![Screenshot]
+
+**Screenshot**
 <img width="1920" height="826" alt="Todo-List" src="https://github.com/user-attachments/assets/4e35da60-7317-489e-8cae-33a9d8485f99" />
 
 ## Built with
