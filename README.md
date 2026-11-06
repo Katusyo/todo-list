@@ -23,13 +23,13 @@ A project-based todo app built with vanilla JavaScript. Tasks live inside projec
 - A starter project with a sample task is created on first run
 
 ## What I learned
-- Splitting an app into single-purpose modules:Todo and Project classes for the data model, a storage module for localStorage, and a dom module for all rendering
+- Splitting an app into single-purpose modules: Todo and Project classes for the data model, a storage module for localStorage, and a dom module for all rendering
 - Serialising class instances to JSON and rehydrating them back into real objects on load
 - Managing shared UI state (active project, current sort, current view, the task being edited) across re-renders
 - Event handling for dynamically created elements -- every button is wired up at render time
 
 ## Run it locally
-- git clone https://gihub.com/Katusyo/todo-list.git
+- git clone https://github.com/Katusyo/todo-list.git
 - cd todo-list
 - npm install
 - npm start    # webpack dev server
